@@ -10,6 +10,12 @@ namespace fastEndpointTemplate.Endpoints.Register
             _dataContext = dataContext;
         }
 
+        public override void Configure()
+        {
+            Post("api/user/register");
+            AllowAnonymous();
+        }
+
         public override Task HandleAsync(RegisterRequest req, CancellationToken ct)
         {
             var newUser = Map.ToEntity(req);
