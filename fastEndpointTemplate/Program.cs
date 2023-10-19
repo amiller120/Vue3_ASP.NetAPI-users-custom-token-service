@@ -1,9 +1,15 @@
 global using FastEndpoints;
+using FastEndpoints.Security;
+using fastEndpointTemplate.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddFastEndpoints();
+builder.Services.AddJWTBearerAuth(builder.Configuration["JWTSigningKey"] ?? "");
+
+builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DataContext")));
 
 var app = builder.Build();
 
@@ -17,6 +23,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseFastEndpoints();
 
 app.MapFallbackToFile("index.html");
