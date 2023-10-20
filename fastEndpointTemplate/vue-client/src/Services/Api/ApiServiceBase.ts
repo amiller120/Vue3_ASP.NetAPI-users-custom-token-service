@@ -21,6 +21,17 @@ export default class ApiServiceBase {
         return await this.Request<T>(getRequestConfig);
     }
 
+    public async Post<T>(url: string, params: any | undefined | null)
+    {
+        let postRequestConfig = {
+          url: `${this.base_url}/${this.RESOURCE_NAME}${url}`,
+          method: 'post',
+          data: params
+        } as AxiosRequestConfig<T>
+
+        return await this.Request<T>(postRequestConfig);
+    }
+
     async Request<T>(requestConfig: AxiosRequestConfig<T>) {
         return axios.request<ApiResponse<T>>(requestConfig).then(res => {
             return {

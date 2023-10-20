@@ -1,4 +1,5 @@
 ﻿using fastEndpointTemplate.Data.Contexts;
+using fastEndpointTemplate.Endpoints.Auth.RefreshToken;
 
 namespace fastEndpointTemplate.Endpoints.Auth.Login
 {
@@ -24,11 +25,11 @@ namespace fastEndpointTemplate.Endpoints.Auth.Login
             if (user == null)
                 ThrowError("Invalid user credentials!");
 
-            //Response = await CreateTokenWith<RefreshToken.UserTokenService>(user.Id.ToString(), p =>
-            //{
-            //    p.Claims.Add(new("UserID", user.Id.ToString()));
-            //    p.Permissions.AddRange(new Allow().AllCodes());
-            //});
+            Response = await CreateTokenWith<UserTokenService>(user.UserId, p =>
+            {
+                p.Claims.Add(new("UserID", user.UserId));
+                p.Permissions.AddRange(new Allow().AllCodes());
+            });
         }
     }
 }

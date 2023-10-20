@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddFastEndpoints();
+builder.Services.AddAuthorization();
 builder.Services.AddJWTBearerAuth(builder.Configuration["JWTSigningKey"] ?? "");
 
 builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DataContext")));

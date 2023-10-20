@@ -12,8 +12,8 @@ using fastEndpointTemplate.Data.Contexts;
 namespace fastEndpointTemplate.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231019030611_AddRefreshTokenTable")]
-    partial class AddRefreshTokenTable
+    [Migration("20231020174328_AddIndexForRefreshToken")]
+    partial class AddIndexForRefreshToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,10 +40,18 @@ namespace fastEndpointTemplate.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExpiryDate")
+                        .HasFilter("\"ExpiryDate\" < NOW() + INTERVAL '1 minute'");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ExpiryDate"), "btree");
+
+                    b.HasIndex("UserId", "Token", "ExpiryDate");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -68,7 +76,7 @@ namespace fastEndpointTemplate.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 

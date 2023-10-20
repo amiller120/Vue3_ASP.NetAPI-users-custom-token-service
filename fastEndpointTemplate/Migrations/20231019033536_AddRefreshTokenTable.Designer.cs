@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using fastEndpointTemplate.Data.Contexts;
@@ -11,9 +12,11 @@ using fastEndpointTemplate.Data.Contexts;
 namespace fastEndpointTemplate.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231019033536_AddRefreshTokenTable")]
+    partial class AddRefreshTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,13 +45,6 @@ namespace fastEndpointTemplate.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExpiryDate")
-                        .HasFilter("\"ExpiryDate\" < NOW() + INTERVAL '1 minute'");
-
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ExpiryDate"), "btree");
-
-                    b.HasIndex("UserId", "Token", "ExpiryDate");
 
                     b.ToTable("RefreshTokens");
                 });

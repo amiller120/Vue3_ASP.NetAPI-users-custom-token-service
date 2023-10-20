@@ -6,7 +6,6 @@ namespace fastEndpointTemplate.Endpoints.Register
     {
         public override User ToEntity(RegisterRequest r) => new User
         {
-            UserName = r.UserName,
             Email = r.Email,
             Password = r.Password,
             Name = r.Name,
