@@ -1,15 +1,18 @@
-﻿using fastEndpointTemplate.Models.Data;
+﻿using fastEndpointTemplate.Helpers;
+using fastEndpointTemplate.Models.Data;
 
 namespace fastEndpointTemplate.Endpoints.Register
 {
     public class RegisterMapper : Mapper<RegisterRequest, RegisterResponse, Models.Data.User>
     {
-        public override User ToEntity(RegisterRequest r) => new User
+        public override User ToEntity(RegisterRequest r)
         {
-            UserName = r.UserName,
-            Email = r.Email,
-            Password = r.Password,
-            Name = r.Name,
-        };
+            return new User
+            {
+                Email = r.Email,
+                Password = PasswordHelper.HashPassword(r.Password, out byte[] salt),
+                Name = r.Name,
+            };
+        }
     }
 }

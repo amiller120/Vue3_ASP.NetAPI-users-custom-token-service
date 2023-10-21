@@ -1,13 +1,16 @@
 global using FastEndpoints;
 using FastEndpoints.Security;
 using fastEndpointTemplate.Data.Contexts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddFastEndpoints();
-builder.Services.AddJWTBearerAuth(builder.Configuration["JWTSigningKey"] ?? "");
+builder.Services.AddFastEndpoints()
+                .AddCookieAuth(validFor: TimeSpan.FromMinutes(20))
+                .AddJWTBearerAuth(builder.Configuration["JWTSigningKey"] ?? "")
+                .AddAuthorization();
 
 builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DataContext")));
 

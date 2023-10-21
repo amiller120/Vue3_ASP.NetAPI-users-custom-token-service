@@ -12,13 +12,14 @@ namespace fastEndpointTemplate.Endpoints.Register
 
         public override void Configure()
         {
-            Post("api/user/register");
+            Post("api/auth/register");
             AllowAnonymous();
         }
 
-        public override Task HandleAsync(RegisterRequest req, CancellationToken ct)
+        public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
         {
             var newUser = Map.ToEntity(req);
+            newUser.UserId = Guid.NewGuid().ToString(); // create guid for UserId
             _dataContext.Users.Add(newUser);
             try
             {
@@ -35,7 +36,7 @@ namespace fastEndpointTemplate.Endpoints.Register
 
                 throw;
             }
-            return base.HandleAsync(req, ct);
+            await SendAsync(Response);
         }
     }
 }
