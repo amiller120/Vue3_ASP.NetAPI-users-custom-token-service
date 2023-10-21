@@ -12,12 +12,16 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import AuthService from '../Services/Api/AuthService';
+  import { useRouter } from 'vue-router'
 
   const name = ref('');
   const email = ref('');
   const password = ref('');
+  const router = useRouter();
 
   const submitForm = async () => {
     let response = await AuthService.register(email.value, name.value, password.value);
+
+    router.push("/login");
   }
 </script>
