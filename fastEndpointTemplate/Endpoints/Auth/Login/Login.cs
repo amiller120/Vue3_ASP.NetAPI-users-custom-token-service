@@ -1,5 +1,8 @@
-﻿using fastEndpointTemplate.Data.Contexts;
+﻿using FastEndpoints.Security;
+using fastEndpointTemplate.Data.Contexts;
 using fastEndpointTemplate.Endpoints.Auth.RefreshToken;
+using fastEndpointTemplate.Helpers;
+using Microsoft.AspNetCore.Authentication;
 
 namespace fastEndpointTemplate.Endpoints.Auth.Login
 {
@@ -22,14 +25,14 @@ namespace fastEndpointTemplate.Endpoints.Auth.Login
         {
             var user = _dataContext.Users.FirstOrDefault(x => x.Email.ToLower() == req.Email.ToLower());
 
-            if (user == null)
+            if (user == null || !PasswordHelper.VerifyPassword(req.Password, user.Password))
                 ThrowError("Invalid user credentials!");
 
             Response = await CreateTokenWith<UserTokenService>(user.UserId, p =>
             {
                 p.Claims.Add(new("UserID", user.UserId));
                 p.Permissions.AddRange(new Allow().AllCodes());
-            });
+            });                        
         }
     }
 }

@@ -1,5 +1,6 @@
 import ApiServiceBase from "./ApiServiceBase"
 import { registerResponse } from "./Models/registerResponse";
+import { TokenResponse } from "./Models/TokenResponse";
 
 
 class AuthService extends ApiServiceBase {
@@ -8,7 +9,7 @@ class AuthService extends ApiServiceBase {
     super(resource_name);
   }
 
-  async Login<TokenResponse>(email: string, password: string) {
+  async Login(email: string, password: string) {
     let loginRequest = {
       email: email,
       password: password
@@ -16,7 +17,7 @@ class AuthService extends ApiServiceBase {
     return await this.Post<TokenResponse>("/login", loginRequest);
   }
 
-  async register<registerResponse>(email: string, name: string, password: string) {
+  async register(email: string, name: string, password: string) {
     let registerRequest = {
       email: email,
       password: password,

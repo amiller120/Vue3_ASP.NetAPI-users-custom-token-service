@@ -14,7 +14,6 @@
 
   onMounted(async () => {
     let response = await TestService.GetTest<string>()
-    debugger;
     state.response = response.data;
   })
 
