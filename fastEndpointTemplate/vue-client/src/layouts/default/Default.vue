@@ -19,7 +19,7 @@
 
 
       <v-list-item link title="Home"><router-link to="/"></router-link></v-list-item>
-      <v-list-item link title="List Item 2"><router-link to="/about"></router-link></v-list-item>
+      <v-list-item link title="List Item 2"><router-link to="/login"></router-link></v-list-item>
       <v-list-item link title="List Item 3"></v-list-item>
     </v-navigation-drawer>
   </v-app>
@@ -28,7 +28,7 @@
 <script lang="ts" setup>
   import { ref } from "vue"
   const drawer = ref(false);
-  const items = ref([{ title: "Home", path: '/' }, { title: "About", path: '/About' }])
+  const items = ref([{ title: "Home", path: '/' }, { title: "Login", path: '/Login' }])
 
 
 </script>

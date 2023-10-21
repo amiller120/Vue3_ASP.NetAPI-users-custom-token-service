@@ -4,8 +4,8 @@
       <v-text-field v-model="name" label="Name"></v-text-field>
       <v-text-field v-model="email" label="Email"></v-text-field>
       <v-text-field v-model="password" label="Password"></v-text-field>
-    </v-form>
-    <v-btn @click="submitForm">Save</v-btn>
+      <v-btn @click="submitForm">Save</v-btn>
+    </v-form>    
   </v-container>
 </template>
 

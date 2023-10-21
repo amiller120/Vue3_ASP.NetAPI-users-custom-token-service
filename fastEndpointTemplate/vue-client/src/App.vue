@@ -33,7 +33,7 @@
 <script lang="ts" setup>
   import { ref } from "vue"
   const drawer = ref(false);
-  const items = ref([{ title: "Home", path: '/' }, { title: "About", path: '/About' }])
+  const items = ref([{ title: "Home", path: '/' }, { title: "Login", path: '/Login' }])
 
 
 </script>
