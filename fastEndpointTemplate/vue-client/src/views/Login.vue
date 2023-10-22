@@ -21,7 +21,6 @@
   const login = async () => {
     let loginResponse = await AuthService.Login(email.value, password.value);
     if (loginResponse.status == 200) {
-      document.cookie = `access_token=${loginResponse.data.accessToken}; path=/; expires=${loginResponse.data.accessExiry}SameSite=None; Secure=True;`;
       router.push("/");
     }
   }

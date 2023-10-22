@@ -27,12 +27,13 @@ namespace fastEndpointTemplate.Endpoints.Auth.Login
 
             if (user == null || !PasswordHelper.VerifyPassword(req.Password, user.Password))
                 ThrowError("Invalid user credentials!");
-
+            
             Response = await CreateTokenWith<UserTokenService>(user.UserId, p =>
             {
                 p.Claims.Add(new("UserID", user.UserId));
                 p.Permissions.AddRange(new Allow().AllCodes());
-            });                        
+            });
+            HttpContext.Response.Cookies.Append("access_token", Response.AccessToken, new CookieOptions { HttpOnly = true });
         }
     }
 }
