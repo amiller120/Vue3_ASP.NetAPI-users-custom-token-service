@@ -34,13 +34,7 @@ export default class ApiServiceBase {
     return await this.Request<T>(postRequestConfig);
   }
 
-  async Request<T>(requestConfig: AxiosRequestConfig<T>) {
-    debugger;
-    let token = document.cookie.split('; ').find(row => row.startsWith('access_token='))?.split('=')[1] ?? undefined;
-    if (token) {
-      requestConfig.headers.Authorization = `Bearer ${token}`;
-    }
-    
+  async Request<T>(requestConfig: AxiosRequestConfig<T>) {    
     return axios.request<ApiResponse<T>>(requestConfig).then(res => {
       return {
         data: res.data,

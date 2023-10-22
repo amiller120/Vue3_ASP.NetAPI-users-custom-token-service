@@ -26,6 +26,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseMiddleware<AuthorizationHeaderMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseFastEndpoints();
